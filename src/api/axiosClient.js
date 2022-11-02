@@ -16,10 +16,9 @@ axiosClient.interceptors.request.use(
     ) {
       return config;
     }
-
-    const accessToken = localStorage.getItem("access_token");
-    const refreshToken = localStorage.getItem("refresh_token");
     const timeExpired = localStorage.getItem("time_expired");
+    const refreshToken = localStorage.getItem("refresh_token");
+
     const now = new Date().getTime();
     console.log(`timeExpired:${timeExpired} vs now:${now}`);
 
@@ -39,6 +38,8 @@ axiosClient.interceptors.request.use(
         return Promise.reject(error);
       }
     }
+
+    const accessToken = localStorage.getItem("access_token");
 
     if (accessToken) {
       config.headers.Authorization = `Bearer ${accessToken}`;

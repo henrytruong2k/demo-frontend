@@ -1,20 +1,20 @@
-import React, { useEffect } from 'react'
-import userApi from '../api/userApi';
+import React, { useEffect, useState } from "react";
+import userApi from "../api/userApi";
 
 const Home = () => {
-    useEffect(() => {
-        (async () => {
-            try {
-                const data = await userApi.dashboard();
-                console.log({ data });
-            } catch (error) {
-                console.log('Failed to load api: ', error);
-            }
-        })();
-    }, []);
-    return (
-        <div>Home</div>
-    )
-}
+  const [text, setText] = useState("");
+  useEffect(() => {
+    (async () => {
+      try {
+        const data = await userApi.dashboard();
+        setText(data);
+        console.log({ data });
+      } catch (error) {
+        console.log("Failed to load api: ", error);
+      }
+    })();
+  }, []);
+  return <div>{text.status === true ? text.message : "Home"}</div>;
+};
 
-export default Home
+export default Home;
