@@ -23,10 +23,9 @@ const Login = () => {
   const onSubmit = async (values) => {
     const response = await authApi.login(values);
     if (response.status === true) {
-      const { accessToken, refreshToken, timeExpired, user } = response.data;
+      const { accessToken, refreshToken, user } = response.data;
       localStorage.setItem("access_token", accessToken);
       localStorage.setItem("refresh_token", refreshToken);
-      localStorage.setItem("time_expired", timeExpired);
       localStorage.setItem("user", JSON.stringify(user));
     }
     setMessage(response.message);

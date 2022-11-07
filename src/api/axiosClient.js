@@ -16,31 +16,31 @@ axiosClient.interceptors.request.use(
     ) {
       return config;
     }
-    const timeExpired = localStorage.getItem("time_expired");
+    let accessToken = localStorage.getItem("access_token");
     const refreshToken = localStorage.getItem("refresh_token");
-
+    const payload = JSON.parse(atob(accessToken.split(".")[1]));
+    const expiration = new Date(payload.exp * 1000).getTime();
+    console.log("local storage token: ", accessToken);
     const now = new Date().getTime();
-    console.log(`timeExpired:${timeExpired} vs now:${now}`);
 
-    if (timeExpired < now) {
+    if (expiration < now) {
       try {
-        console.log("AccessToken Expired");
+        console.error("AccessToken Expired");
         const response = await authApi.refreshToken({ token: refreshToken });
-        console.log({ response });
 
         if (response.status === true) {
-          const { accessToken, refreshToken, timeExpired } = response.data;
+          let { accessToken: accessTokenRes, refreshToken } = response.data;
+          console.log("token response", accessTokenRes);
+          accessToken = accessTokenRes;
           localStorage.setItem("access_token", accessToken);
           localStorage.setItem("refresh_token", refreshToken);
-          localStorage.setItem("time_expired", timeExpired);
         }
       } catch (error) {
         return Promise.reject(error);
       }
     }
-
-    const accessToken = localStorage.getItem("access_token");
-
+    console.log("local storage token 2: ", accessToken);
+    // accessToken = localStorage.getItem("access_token");
     if (accessToken) {
       config.headers.Authorization = `Bearer ${accessToken}`;
     }
