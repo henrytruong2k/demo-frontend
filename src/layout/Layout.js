@@ -1,13 +1,16 @@
-import React, { Fragment } from 'react'
-import MainNavigate from './MainNavigate'
+import { Container } from "@mui/material";
+import Navbar from "components/Navbar";
+import React, { Fragment } from "react";
 
 const Layout = (props) => {
-    return (
-        <Fragment>
-            <MainNavigate />
-            <main>{props.children}</main>
-        </Fragment>
-    )
-}
+  return (
+    <Fragment>
+      <Navbar />
+      <Container component="main" maxWidth="xs">
+        {props.children}
+      </Container>
+    </Fragment>
+  );
+};
 
-export default Layout
+export default Layout;

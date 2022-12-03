@@ -1,5 +1,5 @@
+import userApi from "api/userApi";
 import React, { useEffect, useState } from "react";
-import userApi from "../api/userApi";
 
 const Home = () => {
   const [text, setText] = useState("");

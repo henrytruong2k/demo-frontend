@@ -2,7 +2,7 @@ import axios from "axios";
 import authApi from "./authApi";
 
 const axiosClient = axios.create({
-  baseURL: "https://demo-backend-production.up.railway.app",
+  baseURL: process.env.REACT_APP_API_ENDPOINT,
   headers: {
     "Content-Type": "application/json",
   },
